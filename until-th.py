@@ -84,18 +84,30 @@ class Until():
 			return "有的参数是空-Until-rename"
 
 		cw=os.getcwd()
-		if cw in oldname:
+		splitoldname=oldname.split("/")
+		link=""
+		for i in range(0,len(splitoldname)-1):
+			link=link+splitoldname[i]+"/"
+
+		if cw ==link:
 			if os.path.exists(oldname):
 				os.rename(oldname,newname)
 			else:
 				return "Fiale-unexiste(Until-rename1)"
 		else:
 			#如果没有在这工作目录中则要切换路径后进行查询
-			if os.path.exists(cw+"/"+oldname):
-				os.rename(cw+"/"+oldname,newname)
+			if os.path.exists(oldname):
+				#只能是目录对目录，名称对名称，否则在当前目录中创建
+				#指定的目录中那个文件删除掉
+				os.rename(oldname,link+newname)	
 			else:
-				return "Fiale-unexiste(Until-rename2)"
+				return "Faile-unexiste(Until-rename2)"
 		return "OK(Until-rename)"
+
+
+ty=Until()
+print(ty.rename("/Users/TH/Desktop/python工具包/h10","hu"))
+
 
 
 
